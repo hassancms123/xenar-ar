@@ -1,0 +1,1320 @@
+/* =========================================================
+   1. GLOBAL RESET
+========================================================= */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  height: 100%;
+
+  font-family: Arial, sans-serif;
+
+  overflow: hidden;
+}
+
+body {
+  background-color: #ffb900;
+}
+
+
+/* =========================================================
+   2. BACKGROUND IMAGE FOR S0 / S1
+========================================================= */
+
+.background-image {
+  position: fixed;
+  inset: 0;
+
+  background-image: url("assets/backgrounds/application-background.jpg");
+  background-size: cover;
+  background-position: center;
+
+  opacity: 0.1;
+
+  z-index: 0;
+}
+
+.s3-active {
+  background: white !important;
+}
+
+.s3-active .background-image {
+  display: none;
+}
+
+
+/* =========================================================
+   3. COMMON SCREEN LAYOUT
+========================================================= */
+
+.screen {
+  position: relative;
+  z-index: 1;
+
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+/* =========================================================
+   4. S0 / S1 LOGO + DESCRIPTION
+========================================================= */
+
+.logo-image {
+  position: absolute;
+  top: 5%;
+
+  width: 220px;
+  max-width: 70vw;
+
+  margin-bottom: 24px;
+
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+}
+
+.description {
+  position: absolute;
+  top: 27%;
+
+  max-width: 340px;
+
+  font-size: 18px;
+  line-height: 1.5;
+
+  color: #111;
+
+  margin-bottom: 36px;
+}
+
+
+/* =========================================================
+   5. BUTTONS + ICONS
+========================================================= */
+
+.start-button,
+.primary-button,
+.secondary-button {
+  background-color: #ffffff;
+  color: #000;
+
+  border: none;
+  border-radius: 8px;
+
+  padding: 14px 28px;
+
+  font-size: 18px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+}
+
+.start-button {
+  position: absolute;
+  top: 45%;
+}
+
+.button-group {
+  position: absolute;
+  top: 45%;
+
+  width: 100%;
+  max-width: 320px;
+
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.start-button:active,
+.primary-button:active,
+.secondary-button:active,
+.nav-item:active,
+.hotspot-button:active {
+  transform: scale(0.96);
+}
+
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 15px;
+}
+
+.double-icon {
+  display: flex;
+  align-items: center;
+}
+
+.button-icon {
+  width: 14px;
+  height: 14px;
+
+  object-fit: contain;
+
+  margin-left: -7px;
+}
+
+
+/* =========================================================
+   6. COMMON PAGE HEADING
+========================================================= */
+
+.page-heading {
+  position: fixed;
+  top: 0;
+  left: 24px;
+  right: 24px;
+
+  background-color: #ffb900;
+  color: #111;
+
+  font-size: 18px;
+
+  padding: 18px 12px;
+
+  text-align: center;
+
+  border-radius: 0 0 10px 10px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+
+  z-index: 60;
+}
+
+.assembly-heading {
+  background-color: #ffb900;
+  color: white;
+}
+
+.automotive-heading {
+  background-color: rgba(0, 98, 163, 1);
+  color: white;
+}
+
+.electronics-heading {
+  background-color: rgba(186, 20, 72, 1);
+  color: white;
+}
+
+.energy-heading {
+  background-color: rgba(81, 165, 190, 1);
+  color: white;
+}
+
+.medical-heading {
+  background-color: rgba(0, 142, 135, 1);
+  color: white;
+}
+
+
+/* =========================================================
+   7. GLOBAL AR / 3D LAYER
+========================================================= */
+
+#arScene {
+  position: fixed !important;
+  inset: 0 !important;
+
+  width: 100vw !important;
+  height: 100vh !important;
+
+  visibility: hidden;
+  z-index: -1 !important;
+
+  pointer-events: none;
+}
+
+#arScene canvas {
+  position: fixed !important;
+  inset: 0 !important;
+
+  width: 100vw !important;
+  height: 100vh !important;
+
+  background: transparent !important;
+}
+
+/* Camera video hidden by default */
+video {
+  position: fixed !important;
+  inset: 0 !important;
+
+  width: 100vw !important;
+  height: 100vh !important;
+
+  object-fit: cover !important;
+
+  display: none !important;
+  opacity: 1 !important;
+
+  z-index: 0 !important;
+
+  background: black !important;
+}
+
+/* S2 scanning: camera + AR visible */
+body.scanner-active #arScene {
+  visibility: visible;
+  z-index: 5 !important;
+}
+
+body.scanner-active #arScene canvas {
+  z-index: 5 !important;
+}
+
+body.scanner-active video {
+  display: block !important;
+}
+
+/* S4 product view: camera + fixed 3D model visible */
+body.model-view #arScene {
+  visibility: hidden;
+  z-index: -1 !important;
+  pointer-events: none;
+}
+
+body.model-view video {
+  display: none !important;
+}
+
+/* =========================================================
+   S4 PRODUCT VIEW
+========================================================= */
+
+.product-screen {
+  background: transparent !important;
+  justify-content: flex-end;
+
+  padding-top: 90px;
+  padding-bottom: 130px;
+
+  box-sizing: border-box;
+
+  pointer-events: none;
+}
+
+#threeViewer {
+  position: fixed;
+
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 90px;
+
+  width: 100vw;
+
+  z-index: 25;
+
+  pointer-events: auto;
+  touch-action: none;
+
+  background: white;
+}
+
+#threeViewer canvas {
+  width: 100% !important;
+  height: 100% !important;
+
+  display: block;
+
+  pointer-events: auto;
+  touch-action: none;
+}
+
+/* GIF interaction hint above model */
+.interaction-hint {
+  position: fixed;
+
+  top: 90px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 300px;
+  height: 300px;
+
+  z-index: 45;
+
+  pointer-events: none;
+
+  animation: hideInteractionHint 2s forwards;
+}
+
+.interaction-hint img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  opacity: 0.5;
+}
+
+@keyframes hideInteractionHint {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  80% {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Action buttons above bottom navigation */
+.product-action-panel {
+  position: fixed;
+
+  left: 22px;
+  right: 22px;
+  bottom: 120px;
+
+  height: 78px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  background: white;
+
+  border-radius: 10px;
+  overflow: hidden;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.22);
+
+  z-index: 45;
+
+  pointer-events: auto;
+}
+
+.product-action-button {
+  background: white;
+  color: #111;
+
+  border: none;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  font-size: 14px;
+  line-height: 1.15;
+
+  cursor: pointer;
+}
+
+.product-action-button:not(:last-child) {
+  border-right: 1px solid #111;
+}
+
+.product-action-icon {
+  width: 24px;
+  height: 24px;
+
+  object-fit: contain;
+}
+
+.product-action-button:active {
+  transform: scale(0.96);
+}
+
+
+/* =========================================================
+   8. S2 SCAN VIEW
+========================================================= */
+
+.scan-screen {
+  justify-content: center;
+
+  padding-top: 20px;
+  padding-bottom: 150px;
+
+  box-sizing: border-box;
+}
+
+.scan-screen .scan-content {
+  position: relative;
+  z-index: 30;
+}
+
+.scan-content {
+  width: 100%;
+  max-width: 220px;
+
+  background: rgba(0, 0, 0, 0.45);
+  color: white;
+
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.scan-instruction {
+  font-size: 18px;
+  line-height: 1.5;
+
+  color: white;
+
+  margin: 0;
+
+  opacity: 0.3;
+}
+
+
+/* =========================================================
+   9. S3 INDUSTRY WHEEL
+========================================================= */
+
+#screen-s3 {
+  justify-content: center;
+
+  padding-top: 50px;
+  padding-bottom: 140px;
+
+  box-sizing: border-box;
+}
+
+.industry-wheel {
+  position: relative;
+
+  width: 340px;
+  height: 340px;
+
+  border-radius: 50%;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: -40px;
+
+  background: #ffb900;
+}
+
+.wheel-quarter {
+  position: absolute;
+  inset: 0;
+
+  border: none;
+  padding: 0;
+  margin: 0;
+
+  cursor: pointer;
+
+  color: white;
+
+  font-size: 14px;
+
+  text-shadow: 0 1px 4px rgba(0,0,0,0.45);
+
+  background-size: cover;
+  background-position: center;
+
+  z-index: 1;
+}
+
+.wheel-quarter span {
+  position: absolute;
+
+  color: white;
+
+  pointer-events: none;
+}
+
+.wheel-automotive {
+  clip-path: polygon(50% 50%, 0 0, 100% 0);
+
+  background:
+    linear-gradient(rgba(0, 98, 163, 0.75), rgba(0, 98, 163, 0.75)),
+    url("assets/backgrounds/automotive-bg.jpg");
+
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: center 0%;
+}
+
+.wheel-automotive span {
+  top: 15%;
+  left: 50%;
+
+  transform: translateX(-50%);
+}
+
+.wheel-electronic {
+  clip-path: polygon(50% 50%, 100% 0, 100% 100%);
+
+  background:
+    linear-gradient(rgba(186, 20, 72, 0.75), rgba(186, 20, 72, 0.75)),
+    url("assets/backgrounds/electronic-bg.jpg");
+
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: 100% center;
+}
+
+.wheel-electronic span {
+  top: 50%;
+  right: 5%;
+
+  transform: translateY(-50%);
+}
+
+.wheel-energy {
+  clip-path: polygon(50% 50%, 100% 100%, 0 100%);
+
+  background:
+    linear-gradient(rgba(81, 165, 190, 0.75), rgba(81, 165, 190, 0.75)),
+    url("assets/backgrounds/energy-bg.jpeg");
+
+  background-size: 105%;
+  background-repeat: no-repeat;
+  background-position: center 100%;
+}
+
+.wheel-energy span {
+  bottom: 13%;
+  left: 50%;
+
+  transform: translateX(-50%);
+}
+
+.wheel-medical {
+  clip-path: polygon(50% 50%, 0 100%, 0 0);
+
+  background:
+    linear-gradient(rgba(0, 142, 135, 0.75), rgba(0, 142, 135, 0.75)),
+    url("assets/backgrounds/medical-bg.jpg");
+
+  background-size: 105%;
+  background-repeat: no-repeat;
+  background-position: 600% center;
+}
+
+.wheel-medical span {
+  top: 50%;
+  left: 8%;
+
+  transform: translateY(-50%);
+}
+
+.wheel-line {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 2px;
+  height: 150%;
+
+  background: white;
+
+  transform-origin: center;
+
+  z-index: 2;
+
+  pointer-events: none;
+}
+
+.line-one {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.line-two {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.center-circle {
+  width: 150px;
+  height: 150px;
+
+  border-radius: 50%;
+
+  background: #ffb900;
+  color: white;
+
+  border: none;
+
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1.3;
+
+  z-index: 3;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   S5 EXPLODED VIEWER
+========================================================= */
+
+#explodedViewer {
+  position: fixed;
+
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 90px;
+
+  width: 100vw;
+
+  z-index: 25;
+
+  pointer-events: auto;
+  touch-action: none;
+
+  background: white;
+}
+
+#explodedViewer canvas {
+  width: 100% !important;
+  height: 100% !important;
+
+  display: block;
+
+  pointer-events: auto;
+  touch-action: none;
+}
+
+/* =========================================================
+   S7 APPLICATION VIEWER
+========================================================= */
+
+#applicationViewer {
+  position: fixed;
+
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 90px;
+
+  width: 100vw;
+
+  z-index: 25;
+
+  pointer-events: auto;
+  touch-action: none;
+
+  background: white;
+}
+
+#applicationViewer canvas {
+  width: 100% !important;
+  height: 100% !important;
+
+  display: block;
+
+  pointer-events: auto;
+  touch-action: none;
+}
+
+/* =========================================================
+   S6 PRODUCTION PROCESS VIEW
+========================================================= */
+
+.production-screen {
+  background: white;
+  justify-content: flex-start;
+
+  padding-top: 90px;
+  padding-bottom: 190px;
+
+  box-sizing: border-box;
+}
+
+.production-content {
+  width: 100%;
+  max-width: 360px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 20px;
+}
+
+.production-process-text {
+  max-width: 330px;
+
+  font-size: 14px;
+  line-height: 1.4;
+
+  color: #111;
+  text-align: center;
+
+  margin: 0 0 14px;
+}
+
+.production-carousel {
+  position: relative;
+
+  width: 88vw;
+  max-width: 340px;
+
+  height: 230px;
+
+  background: #f5f5f5;
+
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+}
+
+.production-gif {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+
+.process-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 14px;
+}
+
+.process-dot {
+  width: 9px;
+  height: 9px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #cfcfcf;
+
+  padding: 0;
+
+  cursor: pointer;
+}
+
+.process-dot.active {
+  width: 22px;
+
+  border-radius: 20px;
+
+  background: #ffb900;
+}
+
+.process-name {
+  margin-top: 10px;
+
+  font-size: 17px;
+  font-weight: bold;
+
+  color: #111;
+  text-align: center;
+}
+
+/* Active production button */
+.product-action-button.active {
+  background: #777;
+  color: white;
+}
+
+.product-action-button.active .product-action-icon {
+  filter: brightness(0) invert(1);
+}
+
+
+/* =========================================================
+   11. CONTEXT STATES S8-S12
+========================================================= */
+
+.context-screen {
+  background: white;
+
+  justify-content: flex-start;
+
+  padding-top: 90px;
+  padding-bottom: 115px;
+
+  box-sizing: border-box;
+}
+
+.context-content {
+  width: 100%;
+  max-width: 390px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.context-image-wrapper {
+  position: relative;
+
+  width: 90vw;
+  max-width: 360px;
+
+  height: 48vh;
+  max-height: 330px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 20px;
+}
+
+.context-image {
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+
+  display: block;
+}
+
+.medical-image {
+  max-height: 400px;
+}
+
+.context-description {
+  position: fixed;
+
+  left: 24px;
+  right: 24px;
+  bottom: 115px;
+
+  max-width: 340px;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  font-size: 15px;
+  line-height: 1.45;
+
+  color: #111;
+
+  text-align: left;
+
+  z-index: 6;
+}
+
+
+/* =========================================================
+   12. COMMON BOTTOM NAVIGATION
+========================================================= */
+
+.bottom-nav {
+  position: fixed;
+
+  left: 22px;
+  right: 22px;
+  bottom: 0;
+
+  height: 90px;
+
+  background: #ffb900;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.25);
+
+  z-index: 40;
+}
+
+.nav-slot {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-item {
+  width: 100%;
+  height: 100%;
+
+  border: none;
+
+  background: #ffb900;
+  color: #111;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+.nav-item.hidden {
+  display: none !important;
+}
+
+.bottom-nav.hidden {
+  display: none !important;
+}
+
+.nav-item.active {
+  background: #777;
+  color: white;
+}
+
+.nav-icon-img {
+  width: 32px;
+  height: 32px;
+
+  object-fit: contain;
+
+  margin-bottom: 4px;
+}
+
+.nav-item.active .nav-icon-img {
+  filter: brightness(0) invert(1);
+}
+
+.nav-label {
+  font-size: 14px;
+}
+
+/* Slightly align the Back icon to the left of its label */
+#backNavBtn .nav-icon-img {
+  transform: translateX(-2px);
+}
+
+/* =========================================================
+   13. HOTSPOTS
+========================================================= */
+
+.hotspot {
+  position: absolute;
+}
+
+.hotspot-button {
+  position: relative;
+
+  width: 46px;
+  height: 46px;
+
+  border: none;
+  background: transparent;
+
+  padding: 0;
+}
+
+.hotspot-icon {
+  width: 35px;
+  height: 35px;
+
+  border-radius: 50%;
+
+  background: rgba(186, 0, 70, 1);
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 30px;
+
+  line-height: 1;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.hotspot-label {
+  position: absolute;
+
+  left: 50%;
+  bottom: 54px;
+
+  transform: translateX(-50%);
+
+  white-space: nowrap;
+
+  background: white;
+  color: #111;
+
+  border-radius: 5px;
+
+  padding: 8px 14px;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+
+  z-index: 3;
+}
+
+.hotspot-label.hidden {
+  display: none !important;
+}
+
+/* S8 assembly-line process hotspot positions */
+
+.process-hotspot {
+  transform: translate(-50%, -50%);
+}
+
+.hotspot-cleaning {
+  top: 44%;
+  left: 12%;
+}
+
+.hotspot-feeding {
+  top: 70%;
+  left: 27%;
+}
+
+.hotspot-heating-cooling {
+  top: 34%;
+  left: 47%;
+}
+
+.hotspot-identifying {
+  top: 52%;
+  left: 66%;
+}
+
+.hotspot-bending {
+  top: 43%;
+  left: 90%;
+}
+
+.hotspot-automotive {
+  top: 42%;
+  left: 38%;
+}
+
+.hotspot-electronics {
+  top: 45%;
+  left: 52%;
+}
+
+.hotspot-energy {
+  top: 48%;
+  left: 50%;
+}
+
+.hotspot-medical {
+  top: 20%;
+  left: 46%;
+}
+
+
+/* =========================================================
+   14. S8 PROCESS INFO CARD
+========================================================= */
+
+.process-modal-backdrop {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+  box-sizing: border-box;
+
+  background: transparent;
+
+  z-index: 100;
+
+  pointer-events: none;
+}
+
+.process-modal-backdrop.hidden {
+  display: none !important;
+}
+
+.process-modal {
+  position: relative;
+
+  width: 280px;
+  max-width: 85vw;
+  max-height: 75vh;
+
+  overflow-y: auto;
+
+  background: white;
+  border-radius: 18px;
+
+  padding: 20px 16px 16px;
+
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.38);
+
+  text-align: left;
+
+  pointer-events: auto;
+}
+
+.process-card-close {
+  position: absolute;
+
+  top: 8px;
+  right: 8px;
+
+  width: 26px;
+  height: 26px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: white;
+  color: grey;
+
+  font-size: 25px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.process-card-title {
+  margin: 8px 0 8px;
+
+  font-size: 18px;
+
+  color: #111;
+
+  text-align: center;
+}
+
+.process-card-text {
+  margin: 0 0 12px;
+
+  font-size: 13px;
+  line-height: 1.4;
+
+  color: #111;
+}
+
+.process-card-gif {
+  width: 100%;
+  max-height: 150px;
+
+  object-fit: contain;
+
+  border-radius: 12px;
+}
+
+/* =========================================================
+   MODEL VIEWER ONLY FADE
+========================================================= */
+
+.viewer-fade-hidden {
+  opacity: 0;
+}
+
+.viewer-fade-visible {
+  opacity: 1;
+}
+
+#threeViewer,
+#explodedViewer,
+#applicationViewer {
+  transition: opacity 0.35s ease;
+}
+
+.process-info-card {
+  position: fixed;
+
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 280px;
+  max-width: 85vw;
+
+  background: white;
+  border-radius: 18px;
+
+  padding: 20px 16px 16px;
+
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.32);
+
+  z-index: 100;
+
+  text-align: left;
+}
+
+.process-card-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  width: 26px;
+  height: 26px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: white;
+  color: grey;
+
+  font-size: 25px;
+  font-weight: bold;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.process-card-title {
+  margin: 8px 0;
+  font-size: 18px;
+  color: #111;
+  text-align: center;
+}
+
+.process-card-text {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #111;
+}
+
+.process-card-gif {
+  width: 100%;
+  max-height: 150px;
+
+  object-fit: contain;
+  border-radius: 12px;
+}

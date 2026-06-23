@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>XENAR</title>
+
+  <!-- A-Frame + MindAR -->
+  <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+
+  <!-- CSS -->
+  <script type="module" crossorigin src="./assets/index-C3z3yYsg.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DUKwa2RK.css">
+</head>
+
+<body>
+
+  <div class="background-image"></div>
+
+  <!-- =========================
+       GLOBAL AR / 3D SCENE
+  ========================== -->
+  <a-scene
+    id="arScene"
+    mindar-image="imageTargetSrc: assets/mind/products.mind; autoStart: false; uiLoading: true; uiError: true; uiScanning: true; maxTrack: 1;"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false"
+    renderer="antialias: true; alpha: true"
+    background="transparent: true"
+  >
+
+
+    <a-assets>
+      <a-asset-item id="productModel" src="assets/model/model-target-1.glb"></a-asset-item>
+    </a-assets>
+
+    <a-camera id="arCamera" position="0 0 0" look-controls="enabled: false"></a-camera>
+
+    <!-- Lights for MindAR scene -->
+    <a-entity light="type: ambient; intensity: 1.2"></a-entity>
+    <a-entity light="type: directional; intensity: 1" position="1 2 1"></a-entity>
+
+    <a-entity class="image-target" mindar-image-target="targetIndex: 0" data-product-id="electronics"></a-entity>
+    <a-entity class="image-target" mindar-image-target="targetIndex: 1" data-product-id="automotive"></a-entity>
+    <a-entity class="image-target" mindar-image-target="targetIndex: 2" data-product-id="energy"></a-entity>
+    <a-entity class="image-target" mindar-image-target="targetIndex: 3" data-product-id="medical"></a-entity>
+
+  </a-scene>
+
+
+  <!-- =========================
+       S0 WELCOME
+  ========================== -->
+  <main class="screen" id="screen-s0">
+
+    <img src="./assets/xenar-logo-xDRa4Daf.png" alt="XENAR Logo" class="logo-image" />
+
+    <div class="description">
+      Discover XENON solutions in augmented reality. Scan product images,
+      explore 3D models, and learn how automated solutions are created.
+    </div>
+
+    <button class="start-button icon-button" id="startButton">
+      <span>Start</span>
+
+      <span class="double-icon">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAA7CAYAAACDk1EZAAAACXBIWXMAACxKAAAsSgF3enRNAAAC1UlEQVRYhb2YwXHbQAxF33qGZ6UDqwMrFUS5aybqQFIFUSqwXIHVgekOmBneTVcQsoOog+jMw+ZAUKYYktglV/lHCZwP7ODvx8JYa2miTM0n4Ajso5X9ww1x1yJeADmwAbJbEl+Rl6lZCuG9/PRQpia+OXmZmi3wBsxa/2/K1OxvRl6m5gC8DMQ8S3LhyYEEOCtxR+mHoDDW2rrRfimxZ2AeUgF3ANHK5sBOiZ0BmUgxHLkkEANPSvwDEAcnlwQOwKvyzbcyNcfg5II9UCjffQ+hANO+XuFyxeZ8XDh9+BqtbDaWvKtypKPX6BJMpkiwk1wSyIGt8v1MEhilgF5ySSBBl+A9I01okFwSiNEVMMqEVHJJYAu8K2Eb8Ymw5II1ugQffSTYKbU+lKmZU0mwbb1NnIGlNOwgfConWtnfwJJhCdYeMA9KLgnkVLfgEJwk6E0uCcS4mVASnFwSOKBL8MuQBL0argtlanKqKoewk9O6wujKG1gCJyXmpUzNOji5hwnFbROafOw1ZO5/U8JOwKKeA0McOwDi604mVEswGLkkEONgQlRvwXDH3oSrAoJWLsRbB+ICSIJW7th0l8dHsMpFRoPXKR+OF67bpXtjhq0WYNu02lCVZ7hdsVcnM5lcjEMjfu262yc1nCwOnpWw92hll11/jK5cJKURF1T3fidGVS6dnaHPcgsZvcKQOw6RAJ+1IdLr2EVSiQPxLvj0SqVlrbOfujq7C87HLpLaKGGv8rpxghO5dPbQugygiFbW67msHruYhUZ8oprlvDBI7mEW6zErst5j/x+rkc7KhThzIN4F38lQzVijzGISuTzwNUn99JGUE7lI6lH5pkBfFDnh0nAey99Bs/BBveyfo2+U6vkrCDFUy35Xs9i7mIUXOXBA7+wfUzu7C/WyP6a/w73Mwpsceucxb7PwQXPZf6R6Zdbv7IIRZuGDf+72hpmsQzdYG38BT2ZPG8pqlnIAAAAASUVORK5CYII=" alt="" class="button-icon">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAA7CAYAAACDk1EZAAAACXBIWXMAACxKAAAsSgF3enRNAAAC1UlEQVRYhb2YwXHbQAxF33qGZ6UDqwMrFUS5aybqQFIFUSqwXIHVgekOmBneTVcQsoOog+jMw+ZAUKYYktglV/lHCZwP7ODvx8JYa2miTM0n4Ajso5X9ww1x1yJeADmwAbJbEl+Rl6lZCuG9/PRQpia+OXmZmi3wBsxa/2/K1OxvRl6m5gC8DMQ8S3LhyYEEOCtxR+mHoDDW2rrRfimxZ2AeUgF3ANHK5sBOiZ0BmUgxHLkkEANPSvwDEAcnlwQOwKvyzbcyNcfg5II9UCjffQ+hANO+XuFyxeZ8XDh9+BqtbDaWvKtypKPX6BJMpkiwk1wSyIGt8v1MEhilgF5ySSBBl+A9I01okFwSiNEVMMqEVHJJYAu8K2Eb8Ymw5II1ugQffSTYKbU+lKmZU0mwbb1NnIGlNOwgfConWtnfwJJhCdYeMA9KLgnkVLfgEJwk6E0uCcS4mVASnFwSOKBL8MuQBL0argtlanKqKoewk9O6wujKG1gCJyXmpUzNOji5hwnFbROafOw1ZO5/U8JOwKKeA0McOwDi604mVEswGLkkEONgQlRvwXDH3oSrAoJWLsRbB+ICSIJW7th0l8dHsMpFRoPXKR+OF67bpXtjhq0WYNu02lCVZ7hdsVcnM5lcjEMjfu262yc1nCwOnpWw92hll11/jK5cJKURF1T3fidGVS6dnaHPcgsZvcKQOw6RAJ+1IdLr2EVSiQPxLvj0SqVlrbOfujq7C87HLpLaKGGv8rpxghO5dPbQugygiFbW67msHruYhUZ8oprlvDBI7mEW6zErst5j/x+rkc7KhThzIN4F38lQzVijzGISuTzwNUn99JGUE7lI6lH5pkBfFDnh0nAey99Bs/BBveyfo2+U6vkrCDFUy35Xs9i7mIUXOXBA7+wfUzu7C/WyP6a/w73Mwpsceucxb7PwQXPZf6R6Zdbv7IIRZuGDf+72hpmsQzdYG38BT2ZPG8pqlnIAAAAASUVORK5CYII=" alt="" class="button-icon">
+      </span>
+    </button>
+
+  </main>
+
+
+  <!-- =========================
+       S1 CAMERA DECISION
+  ========================== -->
+  <main class="screen hidden" id="screen-s1">
+
+    <img src="./assets/xenar-logo-xDRa4Daf.png" alt="XENAR Logo" class="logo-image" />
+
+    <div class="description">
+      Allow camera access to scan the images from flyer for AR experience or skip to explore the portfolio without AR.
+    </div>
+
+    <div class="button-group">
+
+      <button class="primary-button icon-button" id="allowCameraBtn">
+        <span>Allow</span>
+
+        <span class="double-icon">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAA7CAYAAACDk1EZAAAACXBIWXMAACxKAAAsSgF3enRNAAAC1UlEQVRYhb2YwXHbQAxF33qGZ6UDqwMrFUS5aybqQFIFUSqwXIHVgekOmBneTVcQsoOog+jMw+ZAUKYYktglV/lHCZwP7ODvx8JYa2miTM0n4Ajso5X9ww1x1yJeADmwAbJbEl+Rl6lZCuG9/PRQpia+OXmZmi3wBsxa/2/K1OxvRl6m5gC8DMQ8S3LhyYEEOCtxR+mHoDDW2rrRfimxZ2AeUgF3ANHK5sBOiZ0BmUgxHLkkEANPSvwDEAcnlwQOwKvyzbcyNcfg5II9UCjffQ+hANO+XuFyxeZ8XDh9+BqtbDaWvKtypKPX6BJMpkiwk1wSyIGt8v1MEhilgF5ySSBBl+A9I01okFwSiNEVMMqEVHJJYAu8K2Eb8Ymw5II1ugQffSTYKbU+lKmZU0mwbb1NnIGlNOwgfConWtnfwJJhCdYeMA9KLgnkVLfgEJwk6E0uCcS4mVASnFwSOKBL8MuQBL0argtlanKqKoewk9O6wujKG1gCJyXmpUzNOji5hwnFbROafOw1ZO5/U8JOwKKeA0McOwDi604mVEswGLkkEONgQlRvwXDH3oSrAoJWLsRbB+ICSIJW7th0l8dHsMpFRoPXKR+OF67bpXtjhq0WYNu02lCVZ7hdsVcnM5lcjEMjfu262yc1nCwOnpWw92hll11/jK5cJKURF1T3fidGVS6dnaHPcgsZvcKQOw6RAJ+1IdLr2EVSiQPxLvj0SqVlrbOfujq7C87HLpLaKGGv8rpxghO5dPbQugygiFbW67msHruYhUZ8oprlvDBI7mEW6zErst5j/x+rkc7KhThzIN4F38lQzVijzGISuTzwNUn99JGUE7lI6lH5pkBfFDnh0nAey99Bs/BBveyfo2+U6vkrCDFUy35Xs9i7mIUXOXBA7+wfUzu7C/WyP6a/w73Mwpsceucxb7PwQXPZf6R6Zdbv7IIRZuGDf+72hpmsQzdYG38BT2ZPG8pqlnIAAAAASUVORK5CYII=" alt="" class="button-icon">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAA7CAYAAACDk1EZAAAACXBIWXMAACxKAAAsSgF3enRNAAAC1UlEQVRYhb2YwXHbQAxF33qGZ6UDqwMrFUS5aybqQFIFUSqwXIHVgekOmBneTVcQsoOog+jMw+ZAUKYYktglV/lHCZwP7ODvx8JYa2miTM0n4Ajso5X9ww1x1yJeADmwAbJbEl+Rl6lZCuG9/PRQpia+OXmZmi3wBsxa/2/K1OxvRl6m5gC8DMQ8S3LhyYEEOCtxR+mHoDDW2rrRfimxZ2AeUgF3ANHK5sBOiZ0BmUgxHLkkEANPSvwDEAcnlwQOwKvyzbcyNcfg5II9UCjffQ+hANO+XuFyxeZ8XDh9+BqtbDaWvKtypKPX6BJMpkiwk1wSyIGt8v1MEhilgF5ySSBBl+A9I01okFwSiNEVMMqEVHJJYAu8K2Eb8Ymw5II1ugQffSTYKbU+lKmZU0mwbb1NnIGlNOwgfConWtnfwJJhCdYeMA9KLgnkVLfgEJwk6E0uCcS4mVASnFwSOKBL8MuQBL0argtlanKqKoewk9O6wujKG1gCJyXmpUzNOji5hwnFbROafOw1ZO5/U8JOwKKeA0McOwDi604mVEswGLkkEONgQlRvwXDH3oSrAoJWLsRbB+ICSIJW7th0l8dHsMpFRoPXKR+OF67bpXtjhq0WYNu02lCVZ7hdsVcnM5lcjEMjfu262yc1nCwOnpWw92hll11/jK5cJKURF1T3fidGVS6dnaHPcgsZvcKQOw6RAJ+1IdLr2EVSiQPxLvj0SqVlrbOfujq7C87HLpLaKGGv8rpxghO5dPbQugygiFbW67msHruYhUZ8oprlvDBI7mEW6zErst5j/x+rkc7KhThzIN4F38lQzVijzGISuTzwNUn99JGUE7lI6lH5pkBfFDnh0nAey99Bs/BBveyfo2+U6vkrCDFUy35Xs9i7mIUXOXBA7+wfUzu7C/WyP6a/w73Mwpsceucxb7PwQXPZf6R6Zdbv7IIRZuGDf+72hpmsQzdYG38BT2ZPG8pqlnIAAAAASUVORK5CYII=" alt="" class="button-icon">
+        </span>
+      </button>
+
+      <button class="secondary-button icon-button" id="skipCameraBtn">
+        <span>Skip</span>
+
+        <span class="double-icon">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAA7CAYAAACDk1EZAAAACXBIWXMAACxKAAAsSgF3enRNAAAC1UlEQVRYhb2YwXHbQAxF33qGZ6UDqwMrFUS5aybqQFIFUSqwXIHVgekOmBneTVcQsoOog+jMw+ZAUKYYktglV/lHCZwP7ODvx8JYa2miTM0n4Ajso5X9ww1x1yJeADmwAbJbEl+Rl6lZCuG9/PRQpia+OXmZmi3wBsxa/2/K1OxvRl6m5gC8DMQ8S3LhyYEEOCtxR+mHoDDW2rrRfimxZ2AeUgF3ANHK5sBOiZ0BmUgxHLkkEANPSvwDEAcnlwQOwKvyzbcyNcfg5II9UCjffQ+hANO+XuFyxeZ8XDh9+BqtbDaWvKtypKPX6BJMpkiwk1wSyIGt8v1MEhilgF5ySSBBl+A9I01okFwSiNEVMMqEVHJJYAu8K2Eb8Ymw5II1ugQffSTYKbU+lKmZU0mwbb1NnIGlNOwgfConWtnfwJJhCdYeMA9KLgnkVLfgEJwk6E0uCcS4mVASnFwSOKBL8MuQBL0argtlanKqKoewk9O6wujKG1gCJyXmpUzNOji5hwnFbROafOw1ZO5/U8JOwKKeA0McOwDi604mVEswGLkkEONgQlRvwXDH3oSrAoJWLsRbB+ICSIJW7th0l8dHsMpFRoPXKR+OF67bpXtjhq0WYNu02lCVZ7hdsVcnM5lcjEMjfu262yc1nCwOnpWw92hll11/jK5cJKURF1T3fidGVS6dnaHPcgsZvcKQOw6RAJ+1IdLr2EVSiQPxLvj0SqVlrbOfujq7C87HLpLaKGGv8rpxghO5dPbQugygiFbW67msHruYhUZ8oprlvDBI7mEW6zErst5j/x+rkc7KhThzIN4F38lQzVijzGISuTzwNUn99JGUE7lI6lH5pkBfFDnh0nAey99Bs/BBveyfo2+U6vkrCDFUy35Xs9i7mIUXOXBA7+wfUzu7C/WyP6a/w73Mwpsceucxb7PwQXPZf6R6Zdbv7IIRZuGDf+72hpmsQzdYG38BT2ZPG8pqlnIAAAAASUVORK5CYII=" alt="" class="button-icon">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAA7CAYAAACDk1EZAAAACXBIWXMAACxKAAAsSgF3enRNAAAC1UlEQVRYhb2YwXHbQAxF33qGZ6UDqwMrFUS5aybqQFIFUSqwXIHVgekOmBneTVcQsoOog+jMw+ZAUKYYktglV/lHCZwP7ODvx8JYa2miTM0n4Ajso5X9ww1x1yJeADmwAbJbEl+Rl6lZCuG9/PRQpia+OXmZmi3wBsxa/2/K1OxvRl6m5gC8DMQ8S3LhyYEEOCtxR+mHoDDW2rrRfimxZ2AeUgF3ANHK5sBOiZ0BmUgxHLkkEANPSvwDEAcnlwQOwKvyzbcyNcfg5II9UCjffQ+hANO+XuFyxeZ8XDh9+BqtbDaWvKtypKPX6BJMpkiwk1wSyIGt8v1MEhilgF5ySSBBl+A9I01okFwSiNEVMMqEVHJJYAu8K2Eb8Ymw5II1ugQffSTYKbU+lKmZU0mwbb1NnIGlNOwgfConWtnfwJJhCdYeMA9KLgnkVLfgEJwk6E0uCcS4mVASnFwSOKBL8MuQBL0argtlanKqKoewk9O6wujKG1gCJyXmpUzNOji5hwnFbROafOw1ZO5/U8JOwKKeA0McOwDi604mVEswGLkkEONgQlRvwXDH3oSrAoJWLsRbB+ICSIJW7th0l8dHsMpFRoPXKR+OF67bpXtjhq0WYNu02lCVZ7hdsVcnM5lcjEMjfu262yc1nCwOnpWw92hll11/jK5cJKURF1T3fidGVS6dnaHPcgsZvcKQOw6RAJ+1IdLr2EVSiQPxLvj0SqVlrbOfujq7C87HLpLaKGGv8rpxghO5dPbQugygiFbW67msHruYhUZ8oprlvDBI7mEW6zErst5j/x+rkc7KhThzIN4F38lQzVijzGISuTzwNUn99JGUE7lI6lH5pkBfFDnh0nAey99Bs/BBveyfo2+U6vkrCDFUy35Xs9i7mIUXOXBA7+wfUzu7C/WyP6a/w73Mwpsceucxb7PwQXPZf6R6Zdbv7IIRZuGDf+72hpmsQzdYG38BT2ZPG8pqlnIAAAAASUVORK5CYII=" alt="" class="button-icon">
+        </span>
+      </button>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       S2 SCAN GUIDANCE / MINDAR
+  ========================== -->
+  <main class="screen scan-screen hidden" id="screen-s2">
+
+    <div class="page-heading">
+      Scan Product Image
+    </div>
+
+    <section class="scan-content">
+      <p class="scan-instruction" id="scanInstruction">
+        Point your camera at a product image on the flyer.
+        Hold your device steady until the product is recognized.
+      </p>
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       S3 HOME / MAIN SELECTION
+  ========================== -->
+  <main class="screen hidden" id="screen-s3">
+
+    <div class="page-heading">
+      Explore Solutions by Industry
+    </div>
+
+    <section class="industry-wheel">
+
+      <button class="wheel-quarter wheel-automotive" id="automotiveBtn">
+        <span>Automotive</span>
+      </button>
+
+      <button class="wheel-quarter wheel-electronic" id="electronicBtn">
+        <span>Electronic</span>
+      </button>
+
+      <button class="wheel-quarter wheel-energy" id="energyBtn">
+        <span>Energy</span>
+      </button>
+
+      <button class="wheel-quarter wheel-medical" id="medicalBtn">
+        <span>Medical</span>
+      </button>
+
+      <div class="wheel-line line-one"></div>
+      <div class="wheel-line line-two"></div>
+
+      <button class="center-circle" id="assemblyLineBtn">
+        Automation<br>
+        Assembly Line
+      </button>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+      S4 PRODUCT VIEW
+  ========================== -->
+  <main class="screen product-screen hidden" id="screen-s4">
+
+    <div id="threeViewer"></div>
+
+    <div class="page-heading" id="productHeading">
+      Product View
+    </div>
+
+    <div class="interaction-hint">
+      <img src="./assets/interaction-hint-BM9ZaLJb.gif" alt="Interaction hint">
+    </div>
+
+    <section class="product-action-panel">
+
+      <button class="product-action-button" id="explodedViewBtn">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAACXBIWXMAABYlAAAWJQFJUiTwAAAC20lEQVRoge2azXHbMBCFn4WFrnYqiDswOwjTAVNBmA7SQZIO2IHpDtSBqQ6UDpQOpKuwM8xBoIfiHxYkIPugN4OxhgNi8YkL7APlu7quEVNEOmU2VcwYq5iDE+kSwCuRzmPGQV3XUZpSVCpFdavlsWJdCyAqyDUBooEEXRN2DXx3dHsOvUaCQQgBGgUFCQLhCdAoGMjd0joxE6Ctb8xms2QOiyHGRKQrAF9al77GKnpRi921RBHHLgFUAPYAHu3fKIqWTtfULZ1GB9XrFEDauVyxOVUx4gVLJ9LrBwAFgAzA/Ui3o+1TsDkdggQG3N5JKcqcfUhnivRBka6F7aBIp0Iv5owvMXOVAyD3mHy3Oc2gxDRK3OgohCKdLgBonkgigJgEGdydJFbCroFyYTbfe4wx6rV6EB5eKAPwWTiBKT2RXmfCvoMgFxCeZu6nsJ9EuUffHshbnZgAeCTSv+3nktnsbSo9+czSofRiUqTT7rWOnok0mE0J2Drh8QQ+MZuDLWav/nN1jG1rh/3Sfgnu+cFsyhWRLiBMIWYTrkD1lcy455lIJyucd4dj2PnM0n7GPS/MZrdiNjuc828M5AhgC2BLpJtva07ASbE5tcfcNzEnbnlhNjnQ8k52ghX6vmfLbNLuCKTXe4TZYs8xzKkXw85ryNy9AQCtLVbwRLpadC5eMNYFANCpE54ghUfgKR0hr9o9AGCgYktBbA7/EQafUi605YMAACYNYKIUHQQutlxgAEuhi53s5xogUYo2gvPEHJBCeJ5wgoY82WU4rxPXjvUP5xSqggRGhLcdFiZFvwLvAGxinLNvr2w+iqJBEOmksSlEOiXSD7Fi3V4ofxSF+H1iA2AoVRJcmsm/AIYqc/Huv09MuF+Jxq2Ehxan0wz32ygIABBoTcwACQYABFzYHiBBAYDAu5MAJDgAEGGLnQCJAgAg6j+oNOcR53lgaYtqAO32mzObkK88e/oPvFY8setg0XwAAAAASUVORK5CYII=" alt="" class="product-action-icon">
+        <span>Explode</span>
+      </button>
+
+      <button class="product-action-button" id="productionProcessBtn">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAACXBIWXMAABYlAAAWJQFJUiTwAAADhUlEQVRogc1a7XHbMAx9DsHfcSeoOkHdCaINog2iTlCPoBGUCapMUHuC2Bs4G8gTNPkt3rE/yPRUVQCpL8fvTnc+AQL5+AGAoFfWWswNIl0wotqYppq7vdVCJDijL8Y0m7nbu5nbIJGWOvl17vaABUgAWEtCIp3M3eASJNKAPJm7wSgSRLoMLJMhiLJDpDMinUdZtNaKj1JUKUXWP9uA7lopqlv6fc9OKVoH7JQt/TzUxyEE2E4oRRtGl3tefUeTjp1EKTr16ItEWBdLpCsAD8wEvgAo4DbxFtO8zhFA6X9XAG4Zve9cjOklQaRLAD8mdGwp9BJZwjtdHNJyOmGh4DQST8Y0eZ9AIpEAOIFfo5fEC4DUmOa1TyjmTkQ6A/BrYINnADsABwDtRhO4QJhh2MC8wRE4sRoRcaKMdJu1UpSF7HmbuXezMXbF2GStjdrYvVPYwaMxTWJMs4sZWu9hEgD7WdqPGLXQiAUj6oiA2n4OUyN2HmigmEKg1c4u0M5mynLKBdnRmKaIWA4xyOEcAoet9DFLwmetd8K3hWR4CLzrlOxlRJo9p/zjYr3iBm7TSTnR0ZgmHdjXIIh0DeAzI97D5VavAE7tmLFSikq4jkuj3gWbjE3BiJztCKC6wXACgIvkS+AwUP8OQDIqARSj5zTExKT/cG1Z7KjBuTYSo87xo0hI7u4jMHYm0jk7MdXuylrbjQ+J/52CT5nZA8oUBA5iZzjvVcPtnb/xQjoUhc4Sn7hDyhgQ6RTAs6DyxZim7hOwy8mn1VI+UwqyMSgE2Z4jAIT3hNTRBz96k0Gkt5ADbiV9HzqergH8Fr4PHx0D8KXKn4LK2ZgmkWyIM+HX/JOgcgvgMHZGIggAEcs2xsWGRvkWwLMvOkfFDyKdEOkdwgQA541EhJZTgmFlmze4SscOwKHtvTzBFK7awZVH+3AGsJE8oeRi13B++RoKaHtjmowTSsupxHUQAIB778F6wRWUc8St10vjW58n5GaCnboPRt73kpuJmP3wCHc/MWST9uHdGSBgi8/XhFrQmrm1qdt1IH+7U0Rcc/XZydu3TkpRxhTrqinFsy4R8b4tssZ6UopSwUb3ykskECTRIRIs7EaWJaOqhr6QHSRgrQWFFqwPMkOOjXVAfogxYkwjVv3aWOKMHUpTZjuDvGMJEmInlyj3XPpfNsG0elR7cxv0ODLvFym6/QEvDShdPq5VFwAAAABJRU5ErkJggg==" alt="" class="product-action-icon">
+        <span>Production</span>
+      </button>
+
+      <button class="product-action-button" id="applicationViewBtn">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAvCAYAAABKQCL3AAAACXBIWXMAABYlAAAWJQFJUiTwAAADaElEQVRoge2Z0ZGbMBCGP0fLc5wKQgchFYSrIJcKwlUQp4LYHTgdkAriq+BwBbE74Dqwn9EMeZDwcRw4CITvJnP/zL4IabW/0Eq7q1lZllwCIsEcSIBM62LnVXlZlpOLUpIoJQelpLSyVkrmvvRPbXyslOxqxtfloJQsfMwzm2I7iQQhsAY+9+h+DyRaF9nQ+bySsPt+YeWt4/BbYKF1kbvO642ESHCNWf33I1WttC6WLgPejJywjp2VMbgHMtdB3n1CJIgxf+SDw7AjsHb9Ayd4OIGu245LpWTROFa7JG2OV0pCpSS52BGrlGTW2GXLt7m9E9qMz5SSqGXM0urLLk2iMixXSq5b+kS1fnnbKts/mtdJPheJ+irHHWSaWyfq0tHXBp+nUx2fgDuRILUXHwBaFzutiwOYO0UkWAN/bP/BmIpEha/ATiRY1htFggTIgW8+JpmaBJib+0ejLcH9Ru/EJUhMjlcSLwWvJCxyDzrakPXtOJqE1kUCXAH7sbostsCVSzDoZTtpXWRaFxFwg4lIh+AI3GhdxK5Znlef0LpIgRBY4UZmBYR2vDvGxk5nYqrQhtmlUlJ2xFuZUhKOnWsyEs0Ar9GWtgWIQ2WSasel8V/cE/LPDiZnjoEImNvm3MrGe0lyCM7s47RnjtyaqU3sZ48Og+bHuCPL6iM7n/XVDuOTWln0tHizsiyHllnacASiIVW8c7D2LWnPAL9Ujr1hPAEwiU5mJx0NkSAUCTbAHd0pbCQ2VfSWZWHKmHciwR6zOBmQu/wdW9Nd0i99zWdKybpnZx+45yHqPWCqflm9g83H+xak90A8U0pizO96LlxpXWR2RyzpX5A+FZ4rx84dBvvGLZACv3v232LeM/KqoXLstVez3DDn4RI9h3qontc/VCTSgQbcAj8xe30o1piI4Bx+cSZUPwWAIkGKKXa54GiNqJRHVugwrH5M7jE+cKDbJ3s9hdVJxGeU9cER88hSTZjz7/w75mlhrULvF6NHofgzO3iFLebtrndg2QzFuxx8b5VPiSPw3TquU2TcJJHyuGqxBT5qXURaFzHwDvf8uQ9uMY476JR8ktnZKz8CDudWZMDl1IbRb9jg4eFxBJkVJuw4jDIA/BUKbKyf98g7Nm1vdS+qUCASRDyks6Ftrt64M9+5BsBfhP8xhbg/nEcAAAAASUVORK5CYII=" alt="" class="product-action-icon">
+        <span>Application</span>
+      </button>
+
+    </section>
+
+  </main>
+
+  <!-- =========================
+     S5 EXPLODED VIEW
+  ========================== -->
+  <main class="screen product-screen hidden" id="screen-s5">
+
+    <div id="explodedViewer"></div>
+
+    <div class="page-heading" id="explodedHeading">
+      Product View
+    </div>
+
+    <section class="product-action-panel">
+
+      <button class="product-action-button active" id="explodedViewBtnS5">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAACXBIWXMAABYlAAAWJQFJUiTwAAAC20lEQVRoge2azXHbMBCFn4WFrnYqiDswOwjTAVNBmA7SQZIO2IHpDtSBqQ6UDpQOpKuwM8xBoIfiHxYkIPugN4OxhgNi8YkL7APlu7quEVNEOmU2VcwYq5iDE+kSwCuRzmPGQV3XUZpSVCpFdavlsWJdCyAqyDUBooEEXRN2DXx3dHsOvUaCQQgBGgUFCQLhCdAoGMjd0joxE6Ctb8xms2QOiyHGRKQrAF9al77GKnpRi921RBHHLgFUAPYAHu3fKIqWTtfULZ1GB9XrFEDauVyxOVUx4gVLJ9LrBwAFgAzA/Ui3o+1TsDkdggQG3N5JKcqcfUhnivRBka6F7aBIp0Iv5owvMXOVAyD3mHy3Oc2gxDRK3OgohCKdLgBonkgigJgEGdydJFbCroFyYTbfe4wx6rV6EB5eKAPwWTiBKT2RXmfCvoMgFxCeZu6nsJ9EuUffHshbnZgAeCTSv+3nktnsbSo9+czSofRiUqTT7rWOnok0mE0J2Drh8QQ+MZuDLWav/nN1jG1rh/3Sfgnu+cFsyhWRLiBMIWYTrkD1lcy455lIJyucd4dj2PnM0n7GPS/MZrdiNjuc828M5AhgC2BLpJtva07ASbE5tcfcNzEnbnlhNjnQ8k52ghX6vmfLbNLuCKTXe4TZYs8xzKkXw85ryNy9AQCtLVbwRLpadC5eMNYFANCpE54ghUfgKR0hr9o9AGCgYktBbA7/EQafUi605YMAACYNYKIUHQQutlxgAEuhi53s5xogUYo2gvPEHJBCeJ5wgoY82WU4rxPXjvUP5xSqggRGhLcdFiZFvwLvAGxinLNvr2w+iqJBEOmksSlEOiXSD7Fi3V4ofxSF+H1iA2AoVRJcmsm/AIYqc/Huv09MuF+Jxq2Ehxan0wz32ygIABBoTcwACQYABFzYHiBBAYDAu5MAJDgAEGGLnQCJAgAg6j+oNOcR53lgaYtqAO32mzObkK88e/oPvFY8setg0XwAAAAASUVORK5CYII=" alt="" class="product-action-icon">
+        <span>Explode</span>
+      </button>
+
+      <button class="product-action-button" id="productionProcessBtnS5">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAACXBIWXMAABYlAAAWJQFJUiTwAAADhUlEQVRogc1a7XHbMAx9DsHfcSeoOkHdCaINog2iTlCPoBGUCapMUHuC2Bs4G8gTNPkt3rE/yPRUVQCpL8fvTnc+AQL5+AGAoFfWWswNIl0wotqYppq7vdVCJDijL8Y0m7nbu5nbIJGWOvl17vaABUgAWEtCIp3M3eASJNKAPJm7wSgSRLoMLJMhiLJDpDMinUdZtNaKj1JUKUXWP9uA7lopqlv6fc9OKVoH7JQt/TzUxyEE2E4oRRtGl3tefUeTjp1EKTr16ItEWBdLpCsAD8wEvgAo4DbxFtO8zhFA6X9XAG4Zve9cjOklQaRLAD8mdGwp9BJZwjtdHNJyOmGh4DQST8Y0eZ9AIpEAOIFfo5fEC4DUmOa1TyjmTkQ6A/BrYINnADsABwDtRhO4QJhh2MC8wRE4sRoRcaKMdJu1UpSF7HmbuXezMXbF2GStjdrYvVPYwaMxTWJMs4sZWu9hEgD7WdqPGLXQiAUj6oiA2n4OUyN2HmigmEKg1c4u0M5mynLKBdnRmKaIWA4xyOEcAoet9DFLwmetd8K3hWR4CLzrlOxlRJo9p/zjYr3iBm7TSTnR0ZgmHdjXIIh0DeAzI97D5VavAE7tmLFSikq4jkuj3gWbjE3BiJztCKC6wXACgIvkS+AwUP8OQDIqARSj5zTExKT/cG1Z7KjBuTYSo87xo0hI7u4jMHYm0jk7MdXuylrbjQ+J/52CT5nZA8oUBA5iZzjvVcPtnb/xQjoUhc4Sn7hDyhgQ6RTAs6DyxZim7hOwy8mn1VI+UwqyMSgE2Z4jAIT3hNTRBz96k0Gkt5ADbiV9HzqergH8Fr4PHx0D8KXKn4LK2ZgmkWyIM+HX/JOgcgvgMHZGIggAEcs2xsWGRvkWwLMvOkfFDyKdEOkdwgQA541EhJZTgmFlmze4SscOwKHtvTzBFK7awZVH+3AGsJE8oeRi13B++RoKaHtjmowTSsupxHUQAIB778F6wRWUc8St10vjW58n5GaCnboPRt73kpuJmP3wCHc/MWST9uHdGSBgi8/XhFrQmrm1qdt1IH+7U0Rcc/XZydu3TkpRxhTrqinFsy4R8b4tssZ6UopSwUb3ykskECTRIRIs7EaWJaOqhr6QHSRgrQWFFqwPMkOOjXVAfogxYkwjVv3aWOKMHUpTZjuDvGMJEmInlyj3XPpfNsG0elR7cxv0ODLvFym6/QEvDShdPq5VFwAAAABJRU5ErkJggg==" alt="" class="product-action-icon">
+        <span>Production</span>
+      </button>
+
+      <button class="product-action-button" id="applicationViewBtnS5">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAvCAYAAABKQCL3AAAACXBIWXMAABYlAAAWJQFJUiTwAAADaElEQVRoge2Z0ZGbMBCGP0fLc5wKQgchFYSrIJcKwlUQp4LYHTgdkAriq+BwBbE74Dqwn9EMeZDwcRw4CITvJnP/zL4IabW/0Eq7q1lZllwCIsEcSIBM62LnVXlZlpOLUpIoJQelpLSyVkrmvvRPbXyslOxqxtfloJQsfMwzm2I7iQQhsAY+9+h+DyRaF9nQ+bySsPt+YeWt4/BbYKF1kbvO642ESHCNWf33I1WttC6WLgPejJywjp2VMbgHMtdB3n1CJIgxf+SDw7AjsHb9Ayd4OIGu245LpWTROFa7JG2OV0pCpSS52BGrlGTW2GXLt7m9E9qMz5SSqGXM0urLLk2iMixXSq5b+kS1fnnbKts/mtdJPheJ+irHHWSaWyfq0tHXBp+nUx2fgDuRILUXHwBaFzutiwOYO0UkWAN/bP/BmIpEha/ATiRY1htFggTIgW8+JpmaBJib+0ejLcH9Ru/EJUhMjlcSLwWvJCxyDzrakPXtOJqE1kUCXAH7sbostsCVSzDoZTtpXWRaFxFwg4lIh+AI3GhdxK5Znlef0LpIgRBY4UZmBYR2vDvGxk5nYqrQhtmlUlJ2xFuZUhKOnWsyEs0Ar9GWtgWIQ2WSasel8V/cE/LPDiZnjoEImNvm3MrGe0lyCM7s47RnjtyaqU3sZ48Og+bHuCPL6iM7n/XVDuOTWln0tHizsiyHllnacASiIVW8c7D2LWnPAL9Ujr1hPAEwiU5mJx0NkSAUCTbAHd0pbCQ2VfSWZWHKmHciwR6zOBmQu/wdW9Nd0i99zWdKybpnZx+45yHqPWCqflm9g83H+xak90A8U0pizO96LlxpXWR2RyzpX5A+FZ4rx84dBvvGLZACv3v232LeM/KqoXLstVez3DDn4RI9h3qontc/VCTSgQbcAj8xe30o1piI4Bx+cSZUPwWAIkGKKXa54GiNqJRHVugwrH5M7jE+cKDbJ3s9hdVJxGeU9cER88hSTZjz7/w75mlhrULvF6NHofgzO3iFLebtrndg2QzFuxx8b5VPiSPw3TquU2TcJJHyuGqxBT5qXURaFzHwDvf8uQ9uMY476JR8ktnZKz8CDudWZMDl1IbRb9jg4eFxBJkVJuw4jDIA/BUKbKyf98g7Nm1vdS+qUCASRDyks6Ftrt64M9+5BsBfhP8xhbg/nEcAAAAASUVORK5CYII=" alt="" class="product-action-icon">
+        <span>Application</span>
+      </button>
+
+    </section>
+
+  </main>
+
+  <!-- =========================
+     S6 PRODUCTION PROCESS VIEW
+  ========================== -->
+  <main class="screen production-screen hidden" id="screen-s6">
+
+    <div class="page-heading" id="productionHeading">
+      Product View
+    </div>
+
+    <section class="production-content">
+
+      <p class="production-process-text" id="productionProcessText">
+        Components are supplied and prepared for the next automated production step.
+      </p>
+
+      <div class="production-carousel">
+
+        <img
+          src="assets/gifs/feeding.gif"
+          alt="Production process"
+          class="production-gif"
+          id="productionGif"
+        >
+
+      </div>
+
+      <div class="process-dots" id="processDots"></div>
+
+      <div class="process-name" id="processName">
+        Feeding
+      </div>
+
+    </section>
+
+    <section class="product-action-panel">
+
+      <button class="product-action-button" id="explodedViewBtnS6">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAACXBIWXMAABYlAAAWJQFJUiTwAAAC20lEQVRoge2azXHbMBCFn4WFrnYqiDswOwjTAVNBmA7SQZIO2IHpDtSBqQ6UDpQOpKuwM8xBoIfiHxYkIPugN4OxhgNi8YkL7APlu7quEVNEOmU2VcwYq5iDE+kSwCuRzmPGQV3XUZpSVCpFdavlsWJdCyAqyDUBooEEXRN2DXx3dHsOvUaCQQgBGgUFCQLhCdAoGMjd0joxE6Ctb8xms2QOiyHGRKQrAF9al77GKnpRi921RBHHLgFUAPYAHu3fKIqWTtfULZ1GB9XrFEDauVyxOVUx4gVLJ9LrBwAFgAzA/Ui3o+1TsDkdggQG3N5JKcqcfUhnivRBka6F7aBIp0Iv5owvMXOVAyD3mHy3Oc2gxDRK3OgohCKdLgBonkgigJgEGdydJFbCroFyYTbfe4wx6rV6EB5eKAPwWTiBKT2RXmfCvoMgFxCeZu6nsJ9EuUffHshbnZgAeCTSv+3nktnsbSo9+czSofRiUqTT7rWOnok0mE0J2Drh8QQ+MZuDLWav/nN1jG1rh/3Sfgnu+cFsyhWRLiBMIWYTrkD1lcy455lIJyucd4dj2PnM0n7GPS/MZrdiNjuc828M5AhgC2BLpJtva07ASbE5tcfcNzEnbnlhNjnQ8k52ghX6vmfLbNLuCKTXe4TZYs8xzKkXw85ryNy9AQCtLVbwRLpadC5eMNYFANCpE54ghUfgKR0hr9o9AGCgYktBbA7/EQafUi605YMAACYNYKIUHQQutlxgAEuhi53s5xogUYo2gvPEHJBCeJ5wgoY82WU4rxPXjvUP5xSqggRGhLcdFiZFvwLvAGxinLNvr2w+iqJBEOmksSlEOiXSD7Fi3V4ofxSF+H1iA2AoVRJcmsm/AIYqc/Huv09MuF+Jxq2Ehxan0wz32ygIABBoTcwACQYABFzYHiBBAYDAu5MAJDgAEGGLnQCJAgAg6j+oNOcR53lgaYtqAO32mzObkK88e/oPvFY8setg0XwAAAAASUVORK5CYII=" alt="" class="product-action-icon">
+        <span>Explode</span>
+      </button>
+
+      <button class="product-action-button active" id="productionProcessBtnS6">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAACXBIWXMAABYlAAAWJQFJUiTwAAADhUlEQVRogc1a7XHbMAx9DsHfcSeoOkHdCaINog2iTlCPoBGUCapMUHuC2Bs4G8gTNPkt3rE/yPRUVQCpL8fvTnc+AQL5+AGAoFfWWswNIl0wotqYppq7vdVCJDijL8Y0m7nbu5nbIJGWOvl17vaABUgAWEtCIp3M3eASJNKAPJm7wSgSRLoMLJMhiLJDpDMinUdZtNaKj1JUKUXWP9uA7lopqlv6fc9OKVoH7JQt/TzUxyEE2E4oRRtGl3tefUeTjp1EKTr16ItEWBdLpCsAD8wEvgAo4DbxFtO8zhFA6X9XAG4Zve9cjOklQaRLAD8mdGwp9BJZwjtdHNJyOmGh4DQST8Y0eZ9AIpEAOIFfo5fEC4DUmOa1TyjmTkQ6A/BrYINnADsABwDtRhO4QJhh2MC8wRE4sRoRcaKMdJu1UpSF7HmbuXezMXbF2GStjdrYvVPYwaMxTWJMs4sZWu9hEgD7WdqPGLXQiAUj6oiA2n4OUyN2HmigmEKg1c4u0M5mynLKBdnRmKaIWA4xyOEcAoet9DFLwmetd8K3hWR4CLzrlOxlRJo9p/zjYr3iBm7TSTnR0ZgmHdjXIIh0DeAzI97D5VavAE7tmLFSikq4jkuj3gWbjE3BiJztCKC6wXACgIvkS+AwUP8OQDIqARSj5zTExKT/cG1Z7KjBuTYSo87xo0hI7u4jMHYm0jk7MdXuylrbjQ+J/52CT5nZA8oUBA5iZzjvVcPtnb/xQjoUhc4Sn7hDyhgQ6RTAs6DyxZim7hOwy8mn1VI+UwqyMSgE2Z4jAIT3hNTRBz96k0Gkt5ADbiV9HzqergH8Fr4PHx0D8KXKn4LK2ZgmkWyIM+HX/JOgcgvgMHZGIggAEcs2xsWGRvkWwLMvOkfFDyKdEOkdwgQA541EhJZTgmFlmze4SscOwKHtvTzBFK7awZVH+3AGsJE8oeRi13B++RoKaHtjmowTSsupxHUQAIB778F6wRWUc8St10vjW58n5GaCnboPRt73kpuJmP3wCHc/MWST9uHdGSBgi8/XhFrQmrm1qdt1IH+7U0Rcc/XZydu3TkpRxhTrqinFsy4R8b4tssZ6UopSwUb3ykskECTRIRIs7EaWJaOqhr6QHSRgrQWFFqwPMkOOjXVAfogxYkwjVv3aWOKMHUpTZjuDvGMJEmInlyj3XPpfNsG0elR7cxv0ODLvFym6/QEvDShdPq5VFwAAAABJRU5ErkJggg==" alt="" class="product-action-icon">
+        <span>Production</span>
+      </button>
+
+      <button class="product-action-button" id="applicationViewBtnS6">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAvCAYAAABKQCL3AAAACXBIWXMAABYlAAAWJQFJUiTwAAADaElEQVRoge2Z0ZGbMBCGP0fLc5wKQgchFYSrIJcKwlUQp4LYHTgdkAriq+BwBbE74Dqwn9EMeZDwcRw4CITvJnP/zL4IabW/0Eq7q1lZllwCIsEcSIBM62LnVXlZlpOLUpIoJQelpLSyVkrmvvRPbXyslOxqxtfloJQsfMwzm2I7iQQhsAY+9+h+DyRaF9nQ+bySsPt+YeWt4/BbYKF1kbvO642ESHCNWf33I1WttC6WLgPejJywjp2VMbgHMtdB3n1CJIgxf+SDw7AjsHb9Ayd4OIGu245LpWTROFa7JG2OV0pCpSS52BGrlGTW2GXLt7m9E9qMz5SSqGXM0urLLk2iMixXSq5b+kS1fnnbKts/mtdJPheJ+irHHWSaWyfq0tHXBp+nUx2fgDuRILUXHwBaFzutiwOYO0UkWAN/bP/BmIpEha/ATiRY1htFggTIgW8+JpmaBJib+0ejLcH9Ru/EJUhMjlcSLwWvJCxyDzrakPXtOJqE1kUCXAH7sbostsCVSzDoZTtpXWRaFxFwg4lIh+AI3GhdxK5Znlef0LpIgRBY4UZmBYR2vDvGxk5nYqrQhtmlUlJ2xFuZUhKOnWsyEs0Ar9GWtgWIQ2WSasel8V/cE/LPDiZnjoEImNvm3MrGe0lyCM7s47RnjtyaqU3sZ48Og+bHuCPL6iM7n/XVDuOTWln0tHizsiyHllnacASiIVW8c7D2LWnPAL9Ujr1hPAEwiU5mJx0NkSAUCTbAHd0pbCQ2VfSWZWHKmHciwR6zOBmQu/wdW9Nd0i99zWdKybpnZx+45yHqPWCqflm9g83H+xak90A8U0pizO96LlxpXWR2RyzpX5A+FZ4rx84dBvvGLZACv3v232LeM/KqoXLstVez3DDn4RI9h3qontc/VCTSgQbcAj8xe30o1piI4Bx+cSZUPwWAIkGKKXa54GiNqJRHVugwrH5M7jE+cKDbJ3s9hdVJxGeU9cER88hSTZjz7/w75mlhrULvF6NHofgzO3iFLebtrndg2QzFuxx8b5VPiSPw3TquU2TcJJHyuGqxBT5qXURaFzHwDvf8uQ9uMY476JR8ktnZKz8CDudWZMDl1IbRb9jg4eFxBJkVJuw4jDIA/BUKbKyf98g7Nm1vdS+qUCASRDyks6Ftrt64M9+5BsBfhP8xhbg/nEcAAAAASUVORK5CYII=" alt="" class="product-action-icon">
+        <span>Application</span>
+      </button>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+     S7 APPLICATION VIEW
+  ========================== -->
+  <main class="screen product-screen hidden" id="screen-s7">
+
+    <div id="applicationViewer"></div>
+
+    <div class="page-heading" id="applicationHeading">
+      Application View
+    </div>
+
+    <section class="product-action-panel">
+
+      <button class="product-action-button" id="explodedViewBtnS7">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAACXBIWXMAABYlAAAWJQFJUiTwAAAC20lEQVRoge2azXHbMBCFn4WFrnYqiDswOwjTAVNBmA7SQZIO2IHpDtSBqQ6UDpQOpKuwM8xBoIfiHxYkIPugN4OxhgNi8YkL7APlu7quEVNEOmU2VcwYq5iDE+kSwCuRzmPGQV3XUZpSVCpFdavlsWJdCyAqyDUBooEEXRN2DXx3dHsOvUaCQQgBGgUFCQLhCdAoGMjd0joxE6Ctb8xms2QOiyHGRKQrAF9al77GKnpRi921RBHHLgFUAPYAHu3fKIqWTtfULZ1GB9XrFEDauVyxOVUx4gVLJ9LrBwAFgAzA/Ui3o+1TsDkdggQG3N5JKcqcfUhnivRBka6F7aBIp0Iv5owvMXOVAyD3mHy3Oc2gxDRK3OgohCKdLgBonkgigJgEGdydJFbCroFyYTbfe4wx6rV6EB5eKAPwWTiBKT2RXmfCvoMgFxCeZu6nsJ9EuUffHshbnZgAeCTSv+3nktnsbSo9+czSofRiUqTT7rWOnok0mE0J2Drh8QQ+MZuDLWav/nN1jG1rh/3Sfgnu+cFsyhWRLiBMIWYTrkD1lcy455lIJyucd4dj2PnM0n7GPS/MZrdiNjuc828M5AhgC2BLpJtva07ASbE5tcfcNzEnbnlhNjnQ8k52ghX6vmfLbNLuCKTXe4TZYs8xzKkXw85ryNy9AQCtLVbwRLpadC5eMNYFANCpE54ghUfgKR0hr9o9AGCgYktBbA7/EQafUi605YMAACYNYKIUHQQutlxgAEuhi53s5xogUYo2gvPEHJBCeJ5wgoY82WU4rxPXjvUP5xSqggRGhLcdFiZFvwLvAGxinLNvr2w+iqJBEOmksSlEOiXSD7Fi3V4ofxSF+H1iA2AoVRJcmsm/AIYqc/Huv09MuF+Jxq2Ehxan0wz32ygIABBoTcwACQYABFzYHiBBAYDAu5MAJDgAEGGLnQCJAgAg6j+oNOcR53lgaYtqAO32mzObkK88e/oPvFY8setg0XwAAAAASUVORK5CYII=" alt="" class="product-action-icon">
+        <span>Explode</span>
+      </button>
+
+      <button class="product-action-button" id="productionProcessBtnS7">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAACXBIWXMAABYlAAAWJQFJUiTwAAADhUlEQVRogc1a7XHbMAx9DsHfcSeoOkHdCaINog2iTlCPoBGUCapMUHuC2Bs4G8gTNPkt3rE/yPRUVQCpL8fvTnc+AQL5+AGAoFfWWswNIl0wotqYppq7vdVCJDijL8Y0m7nbu5nbIJGWOvl17vaABUgAWEtCIp3M3eASJNKAPJm7wSgSRLoMLJMhiLJDpDMinUdZtNaKj1JUKUXWP9uA7lopqlv6fc9OKVoH7JQt/TzUxyEE2E4oRRtGl3tefUeTjp1EKTr16ItEWBdLpCsAD8wEvgAo4DbxFtO8zhFA6X9XAG4Zve9cjOklQaRLAD8mdGwp9BJZwjtdHNJyOmGh4DQST8Y0eZ9AIpEAOIFfo5fEC4DUmOa1TyjmTkQ6A/BrYINnADsABwDtRhO4QJhh2MC8wRE4sRoRcaKMdJu1UpSF7HmbuXezMXbF2GStjdrYvVPYwaMxTWJMs4sZWu9hEgD7WdqPGLXQiAUj6oiA2n4OUyN2HmigmEKg1c4u0M5mynLKBdnRmKaIWA4xyOEcAoet9DFLwmetd8K3hWR4CLzrlOxlRJo9p/zjYr3iBm7TSTnR0ZgmHdjXIIh0DeAzI97D5VavAE7tmLFSikq4jkuj3gWbjE3BiJztCKC6wXACgIvkS+AwUP8OQDIqARSj5zTExKT/cG1Z7KjBuTYSo87xo0hI7u4jMHYm0jk7MdXuylrbjQ+J/52CT5nZA8oUBA5iZzjvVcPtnb/xQjoUhc4Sn7hDyhgQ6RTAs6DyxZim7hOwy8mn1VI+UwqyMSgE2Z4jAIT3hNTRBz96k0Gkt5ADbiV9HzqergH8Fr4PHx0D8KXKn4LK2ZgmkWyIM+HX/JOgcgvgMHZGIggAEcs2xsWGRvkWwLMvOkfFDyKdEOkdwgQA541EhJZTgmFlmze4SscOwKHtvTzBFK7awZVH+3AGsJE8oeRi13B++RoKaHtjmowTSsupxHUQAIB778F6wRWUc8St10vjW58n5GaCnboPRt73kpuJmP3wCHc/MWST9uHdGSBgi8/XhFrQmrm1qdt1IH+7U0Rcc/XZydu3TkpRxhTrqinFsy4R8b4tssZ6UopSwUb3ykskECTRIRIs7EaWJaOqhr6QHSRgrQWFFqwPMkOOjXVAfogxYkwjVv3aWOKMHUpTZjuDvGMJEmInlyj3XPpfNsG0elR7cxv0ODLvFym6/QEvDShdPq5VFwAAAABJRU5ErkJggg==" alt="" class="product-action-icon">
+        <span>Production</span>
+      </button>
+
+      <button class="product-action-button active" id="applicationViewBtnS7">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAvCAYAAABKQCL3AAAACXBIWXMAABYlAAAWJQFJUiTwAAADaElEQVRoge2Z0ZGbMBCGP0fLc5wKQgchFYSrIJcKwlUQp4LYHTgdkAriq+BwBbE74Dqwn9EMeZDwcRw4CITvJnP/zL4IabW/0Eq7q1lZllwCIsEcSIBM62LnVXlZlpOLUpIoJQelpLSyVkrmvvRPbXyslOxqxtfloJQsfMwzm2I7iQQhsAY+9+h+DyRaF9nQ+bySsPt+YeWt4/BbYKF1kbvO642ESHCNWf33I1WttC6WLgPejJywjp2VMbgHMtdB3n1CJIgxf+SDw7AjsHb9Ayd4OIGu245LpWTROFa7JG2OV0pCpSS52BGrlGTW2GXLt7m9E9qMz5SSqGXM0urLLk2iMixXSq5b+kS1fnnbKts/mtdJPheJ+irHHWSaWyfq0tHXBp+nUx2fgDuRILUXHwBaFzutiwOYO0UkWAN/bP/BmIpEha/ATiRY1htFggTIgW8+JpmaBJib+0ejLcH9Ru/EJUhMjlcSLwWvJCxyDzrakPXtOJqE1kUCXAH7sbostsCVSzDoZTtpXWRaFxFwg4lIh+AI3GhdxK5Znlef0LpIgRBY4UZmBYR2vDvGxk5nYqrQhtmlUlJ2xFuZUhKOnWsyEs0Ar9GWtgWIQ2WSasel8V/cE/LPDiZnjoEImNvm3MrGe0lyCM7s47RnjtyaqU3sZ48Og+bHuCPL6iM7n/XVDuOTWln0tHizsiyHllnacASiIVW8c7D2LWnPAL9Ujr1hPAEwiU5mJx0NkSAUCTbAHd0pbCQ2VfSWZWHKmHciwR6zOBmQu/wdW9Nd0i99zWdKybpnZx+45yHqPWCqflm9g83H+xak90A8U0pizO96LlxpXWR2RyzpX5A+FZ4rx84dBvvGLZACv3v232LeM/KqoXLstVez3DDn4RI9h3qontc/VCTSgQbcAj8xe30o1piI4Bx+cSZUPwWAIkGKKXa54GiNqJRHVugwrH5M7jE+cKDbJ3s9hdVJxGeU9cER88hSTZjz7/w75mlhrULvF6NHofgzO3iFLebtrndg2QzFuxx8b5VPiSPw3TquU2TcJJHyuGqxBT5qXURaFzHwDvf8uQ9uMY476JR8ktnZKz8CDudWZMDl1IbRb9jg4eFxBJkVJuw4jDIA/BUKbKyf98g7Nm1vdS+qUCASRDyks6Ftrt64M9+5BsBfhP8xhbg/nEcAAAAASUVORK5CYII=" alt="" class="product-action-icon">
+        <span>Application</span>
+      </button>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       S8 ASSEMBLY LINE CONTEXT VIEW
+  ========================== -->
+  <main class="screen context-screen hidden" id="screen-s8">
+
+    <div class="page-heading assembly-heading">
+      Automation Assembly Line
+    </div>
+
+    <section class="context-content">
+
+      <div class="context-image-wrapper">
+
+        <img src="./assets/assembly-line-B2nhKrWs.png" alt="Automation assembly line" class="context-image">
+
+        <!-- Feeding -->
+        <div class="hotspot process-hotspot hotspot-feeding">
+          <button class="hotspot-button process-hotspot-button" data-card="feedingCard">
+            <span class="hotspot-icon">+</span>
+          </button>
+        </div>
+
+        <div class="hotspot process-hotspot hotspot-cleaning">
+          <button class="hotspot-button process-hotspot-button" data-card="cleaningCard">
+            <span class="hotspot-icon">+</span>
+          </button>
+        </div>
+
+        <div class="hotspot process-hotspot hotspot-heating-cooling">
+          <button class="hotspot-button process-hotspot-button" data-card="heatingCoolingCard">
+            <span class="hotspot-icon">+</span>
+          </button>
+        </div>
+
+        <div class="hotspot process-hotspot hotspot-identifying">
+          <button class="hotspot-button process-hotspot-button" data-card="identifyingCard">
+            <span class="hotspot-icon">+</span>
+          </button>
+        </div>
+
+        <div class="hotspot process-hotspot hotspot-bending">
+          <button class="hotspot-button process-hotspot-button" data-card="bendingCard">
+            <span class="hotspot-icon">+</span>
+          </button>
+        </div>
+
+      </div>
+
+      <div class="process-info-card hidden" id="feedingCard">
+        <button class="process-card-close">×</button>
+        <h3 class="process-card-title">Feeding</h3>
+        <p class="process-card-text">
+          Components are supplied and prepared for precise handling in the automated assembly line.
+        </p>
+        <img
+          src="./assets/assembly-feeding-Be5EjRfO.gif"
+          alt="Feeding process"
+          class="process-card-gif"
+        >
+      </div>
+
+      <div class="process-info-card hidden" id="cleaningCard">
+        <button class="process-card-close">×</button>
+        <h3 class="process-card-title">Packaging</h3>
+        <p class="process-card-text">
+          Components are cleaned to remove particles, residues, and contamination before further processing.
+        </p>
+        <img
+          src="./assets/assembly-packaging-Bc-rQ8QM.gif"
+          alt="Cleaning process"
+          class="process-card-gif"
+        >
+      </div>
+
+      <div class="process-info-card hidden" id="heatingCoolingCard">
+        <button class="process-card-close">×</button>
+        <h3 class="process-card-title">Heating / Cooling</h3>
+        <p class="process-card-text">
+          Controlled heating or cooling prepares components for assembly, forming, bonding, or testing.
+        </p>
+        <img
+          src="./assets/assembly-heating-cooling-DNwIuZfm.gif"
+          alt="Heating and cooling process"
+          class="process-card-gif"
+        >
+      </div>
+
+      <div class="process-info-card hidden" id="identifyingCard">
+        <button class="process-card-close">×</button>
+        <h3 class="process-card-title">Identifying</h3>
+        <p class="process-card-text">
+          Sensors, cameras, or code readers identify components and verify their type, position, or orientation.
+        </p>
+        <img
+          src="./assets/assembly-identifying-DKEhuejv.gif"
+          alt="Identifying process"
+          class="process-card-gif"
+        >
+      </div>
+
+      <div class="process-info-card hidden" id="bendingCard">
+        <button class="process-card-close">×</button>
+        <h3 class="process-card-title">Bending</h3>
+        <p class="process-card-text">
+          Components are bent or formed into the required geometry through controlled automated motion.
+        </p>
+        <img
+          src="./assets/assembly-bending-DZYzv_-T.gif"
+          alt="Bending process"
+          class="process-card-gif"
+        >
+      </div>
+
+      <p class="context-description">
+        We develop and build assembly and inspection lines to automate the production of mechatronic components.
+      </p>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       S9 AUTOMOTIVE CONTEXT VIEW
+  ========================== -->
+  <main class="screen context-screen hidden" id="screen-s9">
+
+    <div class="page-heading automotive-heading">
+      Automotive
+    </div>
+
+    <section class="context-content">
+
+      <div class="context-image-wrapper">
+
+        <img src="./assets/automotive-car-Bo-ukO0y.png" alt="Automotive model" class="context-image">
+
+        <div class="hotspot hotspot-automotive">
+          <button class="hotspot-button" data-product="Sensor">
+            <span class="hotspot-icon">+</span>
+
+            <span
+              class="hotspot-label hidden"
+              data-product-id="automotive"
+            >
+              Sensor
+            </span>
+          </button>
+        </div>
+
+      </div>
+
+      <p class="context-description">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        This view shows how automation supports automotive product manufacturing.
+      </p>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       S10 ELECTRONICS CONTEXT VIEW
+  ========================== -->
+  <main class="screen context-screen hidden" id="screen-s10">
+
+    <div class="page-heading electronics-heading">
+      Electronics
+    </div>
+
+    <section class="context-content">
+
+      <div class="context-image-wrapper">
+
+        <img src="./assets/electronic-circuit-C6SeSe3M.jpg" alt="Electronics context" class="context-image">
+
+        <div class="hotspot hotspot-electronics">
+          <button class="hotspot-button" data-product="Connector">
+            <span class="hotspot-icon">+</span>
+
+            <span
+              class="hotspot-label hidden"
+              data-product-id="electronics"
+            >
+              Connector
+            </span>
+          </button>
+        </div>
+
+      </div>
+
+      <p class="context-description">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        This view presents automation solutions for electronic components and systems.
+      </p>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       S11 ENERGY CONTEXT VIEW
+  ========================== -->
+  <main class="screen context-screen hidden" id="screen-s11">
+
+    <div class="page-heading energy-heading">
+      Energy
+    </div>
+
+    <section class="context-content">
+
+      <div class="context-image-wrapper">
+
+        <img src="./assets/energy-valley-VuzDD1Ao.png" alt="Energy context" class="context-image">
+
+        <div class="hotspot hotspot-energy">
+          <button class="hotspot-button" data-product="Fuel Cell">
+            <span class="hotspot-icon">+</span>
+
+            <span
+              class="hotspot-label hidden"
+              data-product-id="energy"
+            >
+              Fuel Cell
+            </span>
+          </button>
+        </div>
+
+      <p class="context-description">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        This view shows automation concepts for energy technologies and sustainable production.
+      </p>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       S12 MEDICAL CONTEXT VIEW
+  ========================== -->
+  <main class="screen context-screen hidden" id="screen-s12">
+
+    <div class="page-heading medical-heading">
+      Medical
+    </div>
+
+    <section class="context-content">
+
+      <div class="context-image-wrapper">
+
+        <img src="./assets/medical-human-BB9C0-oD.png" alt="Medical context" class="context-image medical-image">
+
+        <div class="hotspot hotspot-medical">
+          <button class="hotspot-button" data-product="Heart Stent">
+            <span class="hotspot-icon">+</span>
+
+            <span
+              class="hotspot-label hidden"
+              data-product-id="medical"
+            >
+               Heart Stent
+            </span>
+          </button>
+        </div>
+
+      </div>
+
+      <p class="context-description">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        This view explains automation applications in medical technology production.
+      </p>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       COMMON BOTTOM NAVIGATION
+  ========================== -->
+  <nav class="bottom-nav hidden" id="bottomNav">
+
+    <!-- LEFT SLOT -->
+    <div class="nav-slot">
+      <button class="nav-item hidden" id="backNavBtn">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAABACAYAAABFqxrgAAAACXBIWXMAABYlAAAWJQFJUiTwAAAEWElEQVR4nN1bwVXjMBD9IOVMOoAOkq1gvRWQDjAVEDoIHYQKVlSwpgN3sEkHpIPkbL3nPVhmg7GtkT2jBOY9XZJBM4wm8/WlEcqyRIyhlDZK6Y1SehrLZsP+Qim9V0onze9iOZAqpUs33pTS88gBmLsA1D6kUYPgVqBsjL1SehEpAFMX+KYP6yhBaFmB5kiF7U/dT7DLfqaUnl6UZQkJ0XoyBbABcO1Rfba2WAr5YADcedS2l0LGpwBy+ANwAGCEfFjBHwAAWEuloelJweMhUhcahbhvGJGaoJReER0QqQeuDlHsZ/XfsNYErScpgN8E1Rdri5TN8H/7N6jq0JVHdQsgsbbYA+ALgtaTOYC/BNVXa4sFi9GP9us6NPOoHgDMrS3e6g9YCqNbgZygugWQcthskQy0ACTHAQAYguBWIIM/BQ8AFnUKcoqDwp8E1aW1xab5IUcmDF4BDtF6sgQNCp+sLUzrN5GgUAoJ2rbknVDYNcY4sCQ6sBKEwr4teT02vrkGoYPWkwWAPwRVKSicAniDvw7tUCFBbx0KDoKDwpzgwNbaYh40Oc1+CBQmbYWwKUGF8cgBygokIXMHyBr+AAAVEnkDAAQEISAAklC4Bg0J7q0tcvLEAkiQCBVCKilah85NdWD91UhRyPD+HBwpeiAk1XPnZmSEHBVinwzekveiwxcjRTdD61BnJsRYAYLkoEPh4ELcGgS3AgY0JBjlQJc4UkSBwlZSFCJdmZATHJAMAJUUPbLUoRFQKIUEQeeDHKPpAJUULQWhkIUUhYx3dDiD80EqKfpwPsghF2VZfktSFCKXAZxgCzlSZEBDAvYAABU6GPgDAFRQJIUEtwTVJ4kAAFUQ1kTdVMIBVIuwI+gtXdayy6WjnPcE3TtHZVnFZdcC1e+9T64A5CKBOKP9QRJ7f9C1T8iIjoh0mkieGfSN5rY5RYUCPskdrLKK2wK/EFQf3L6GRT5R6VNuWo58yEBDjB8ciPGJQLl/KoG/UM1Ao9pDJEXEjGxlkS66lBaamaO8rBKwEFcAzFjE6DxUcb/PR8Icd27DwypRM5JQsU8NneLUmupIXxtcPfaC0ClK8UnXcLEOPD0+GNAvXkzI3OS7yBC6DTno3ECAbpOv4dyklGP1GYR6E1EVSh90BnOMoAvZALJ1K0i2UnCTrYGF6tTXclSyRbqWG+PIt7mgHeOEr4M8BnSyZOSoZk7utpmBPhjQoPNXV8/CqBa+gK3tNeTI1hI0spV1ka3RfYwOOlOC6jmQrawNMVjaeq0tMtDJ1orDZsP+uIxkLlSnJluDmjslHMm/CNlasaBDm4xpuWf0wSCAbIk8BDsTspXD3/l+AJBIvoaj9juJvIYLyMidyGs44B06fWTrFcBKyD7lZmsHYMFemFoKVdfDMCNt29nv6oF8f7ct7oRzpAmdaQy7R/abZMuoo4frsZyoyVbrq/VIPtQZ+YlVihXGprhCdSPVY0D0IWkjUf8A1zgsBwQgAfkAAAAASUVORK5CYII=" alt="Back" class="nav-icon-img">
+        <div class="nav-label">Back</div>
+      </button>
+    </div>
+
+    <!-- CENTER SLOT -->
+    <div class="nav-slot">
+      <button class="nav-item" id="homeNavBtn">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH8AAAB/CAYAAADGvR0TAAAACXBIWXMAACxKAAAsSgF3enRNAAAFgklEQVR4nO2d0XViNxCGf1jxbKeCkArWqWDZCkIqCK5gKYHtwKlgTQUhFeS6gtgdQAfwrDmHPEg42MaGC1fSjGa+c/ZpF+4cPl3d4V8k9bbbLbTg3OAawATACMD13l+tATQAFkR+mbuuUvQ0yI/SZwC+nfDP5wCmRH6dtCgGVC/fucENgAWAn1u8bANgROQf01TFg37pAlLi3GCCMJ23EQ8AVwD+ja+vlmrlOzeYAviBIPJcfjg3uOuoJHZUOe07N7gH8EeHb1llH1CV/NjYNQA+J3j7J4Q+oJoBUM20Hxu7BmnEI77vMl6nCqqQ79xghLTid1wBaJwbjBNfJwvi5ceO/B9c1ti14QrAX7GhFI3oZ37sxE8JblIxJ/KTgte/CJHyY2N3D+C3wqUAwAOAscRGUJz8xB39uTwBmEhLBEXJ3+vocz3f2yAuEhbT8O1FtRzFAwIjYRHyO4pqcyEmEmY/7SeIanPBPhJmK59pY9cW1pEwy2k/Q1SbC9aRMDv5GaPaXLCNhFnJLxDV5oJlJMzmmc8gqs0Fm0i4uHxmUW0uWETCReVX0tGfS/FIuJh85lFtLopGwkUaPgFRbS6KRsLZ5QuLanNRJBLOOu0LjmpzkTUSziJfeWPXlmyRcPJpv6KoNhfZIuGk8iuManORJRJOJr/iqDYXySPhJM98RVFtLpJEwp3KVxrV5qLzSLgz+dbRZ6HTSLgT+RbVZqWzSPjihs+i2ux0FglfJN+i2qJcHAmfPe1bVMuGsyPh1vKtsWPJWZFwq2nfolq2nBUJnyzfolr2tI6ET5JvUa0YWkXCR5/5FtWK5Wgk/K58i2qr4MNI+KB86+ir4t1I+I18i2qr5GAk/KLhM/HVcjASfr7zTbwavhL5Bojy4zP+Ee13pzbksQEwJPLr3bQ/hYnXwhWAO+D/O38Nm+618VM/xoEmXh+TPsJhQ4Y+Rn0ALPeLMZIzZLUti5GVzyZfMSZfMSZfMSZfMSZfMSZfMSZfMSZfMSZfMSZfMSZfMSZfMSZfMSZfMSZfMSZfMSZfMa50AZlYISxIaQAsd4sW9on7DwwRftY2hoKfsvc+fXINgC+lC0nABsACwN0525bFFUyT+KfKXzfXOu3/ibAq5ewNC4n8I5GfIswG37ssjgu1yX8C8CuR7+zAAiK/JvIzAL8grHevhprkz4n8TarDioj8ksiPUNEsUIv821wHFcZZ4DbHtVJTg/xbIn+f84LxeuIHgHT533OL31HDAJAs/yFOwcWIA2BesoZLkCp/gxDEcGCKECKJQ6r8WelDiHfEOlgdjX4qEuWviHz20yc/gsgvIDADkCh/VrqAd2A1IE9BmvxNqe7+GPHuF/XslyZ/UbqAI3Cv7wUmv1u41/cCafKb0gV8xKHfCXBGkvwVl693RxDT9UuSvyxdwIlIGKAATH4KkvyXcgpMvmIkyTc6xuQrxuQrxuQrxuQrxuQrxuQrxuQrxuQrxuQrxuQrxuQrxuQrxuQrxuQrxuQrxuQrxuQrxuQrxuQrxuQrxuQrxuR3j5RFG099yPk9vJTFEFLqXPbBfPHjHk3pAk5B0GLNpo+wrHhTupIjPAhZpLlDwg5di378ULlvKTIrXUBL7ksXcIQ5kV/2ttstnBtcIzz7OW4t/jeR57Lt2sk4N7gD8K10HQfYALgh8ss+8LydGMcPeIWw371EZgi7gHNjQuSXwN5XvdiocNpOdANgLOxZ/0ysewReA+A2bhwF4NX3/LjT1VeUbwAfEA5LkPK16SB7A6D0bh0bAL+/3snsTcgTZ4Ahwr7yuQfBCmF0jqTe8a+JhzWMEGbVElu1zRFupDebRfW22+27r4qN4Bhh9A4TFQeEYKQ5VGBtxLN7dp9pKpYIucjio5voP1/iT8RrWCHMAAAAAElFTkSuQmCC" alt="Home" class="nav-icon-img">
+        <div class="nav-label">Home</div>
+      </button>
+    </div>
+
+    <!-- RIGHT SLOT -->
+    <div class="nav-slot">
+      <button class="nav-item" id="rescanNavBtn">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH4AAAB+CAYAAADiI6WIAAAACXBIWXMAACxKAAAsSgF3enRNAAAIiElEQVR4nO2d4XHbNhTHf7bAb72zO0G0gdUJzEwQZ4KqE9SZIOoEdSaIMkHVCUJPEHmCKhPUuus34k79gEebViRLoEACJPC709k+SyTEPx8IPLz3cLbZbABQKrsEboEcP9xqXS49nbsTlMqmwNTT6RfAXOvyEUBJgyZAAVx4ahTApcdzd8UYuPZ07mtgqlQ21bpcnoulF/gVPdENV8Ac4BzT9STR4+FKqWx6Dtz4bkmic27Ofbcg4YXLJHykJOEjJQkfKUn4SFEW710DbXrWHls8diisgPsWj3+0c8hG+KXWZW7flkSF1uUccaC0gVLZ5tj3pq4+UpLwkZKEj5QkfKQk4SMlCR8pSfhIScJHio0DZzBI1NFE/lxWcWgxEZ3FK5XNgH+Br/JaKZXdem2UB6IRXqlsolS2BD5u/esC+FOprJCg0ygYvPBKZZdi5d8wwYb7uAa+yXsHz6CFVyrLMSuK21b+Gh+VypZDt/5BCi9Wfod5hr9pcIgrxPplIDg4Bie8UtkNxsp/d3C4j8BSeo5BMRjhxcoXwF80s/J9vAG+KpXdDcn6ByG8WPkKeNfiaX7HWP8g8hB6LbxS2ViprMBYuU020Bp4D3yQ34/lDfCXUtmi79bfW+HF6bLEPgnxb2CsdbnQurzDePBs4+DeYRw/vbX+3glfs/I/sbPy78B7rcubuotW63IlsYTvsbP+C4z1F0plY4vPBUGvhBfnShMr/wRMtC4X+94g/xtjegQbrjHP/l65fXsh/Ja71dbK32pd3h6zEKN1+ah1eYOx/u8W56m7fccWn/PG2WikJhxXlODRR8UKsXIbz1vFH8Bd05U3GbzNsPcHrOW8sybnPQULf8PjWVUKJTTkS8yxn5M/AFNXN2ko7XBNcF39ie7WP7QuJy4vttZlgRn5f7L86JPb11VbXBKUxZ9gXfcY61o5btILZOFmzuurfLv4jmlf4bpNTQnC4mvuVlsrXwMftC7ztkUH0Lpcal1OMOMHG4Jz+3q3eHGCzLGvw9OJle9DrP8O+6llENbvTXi58+fY+9fXmJp4c9dtaoLM32fY37h/Y24AL/F+XoTv68Xah8zd59hb/xrzffY6ltqiU+H7eIFskMqVd/Tghu5scHfCosonZFHFfavcIo+fMfZu32rRZ+q4SXvpxOJlXm7rAQtiENSUEwatH2TVsFVaF14Gcf9afuwTMAvtWW5LQ7fvWuuy9SlfF129TbTqA/DLsYsqoSOLPrfAW45f8r3oIsYvCAdOjTEDK7EqVn9DYPWCQxP+ggHFtdfi+l1E/DolNOErgl7gOIS4oOc0j+tvnVCFr/ioVLbqU1x7LeL3V89NeZXQhYcAFzh2sRXXH9TzfBd9EL4i2Lh2cbysaDeu3yl9Eh4Ci2uvRfx+pgdWXicE4X+jh3HtJ7igv2CCOb0SgvBVXPtv9CCuXSJ+C5rF9b/VupwSQMHmEIQHTlrg6CyuvVZgoWlcf+G6TU0JRngIN679lTIqh3jAIq6/S4ISvkKWYJtEtl4D/7hy/NQifg+VUdlFFfFbuGiLa4IUHn5Y4LCxfnDg9j3B3VotNM2anrsLnC7Lynw2xzyrKy553VoeODzYOXSM12i6I0TTrUCPOZ/tNVkBhcs4Q2fCy0jX176psfBFZgUn46Srl2dqEr19fnUVnuXqGZ87Ok7iMLmLgwQ7uEvsxYmr2pXwQWaEDpTCxUGcDO5kwWRFzxYqesiD5O6djBOLF6/UBLMAYTvnThzmAZOomTs74maz6ew1GqnJaKRWo5GadHne2vlno5Ha7HnNPLXJyzXxni3bNTty3IOuXNEW0Y3qReB6OtZtbKJDhMInDEn4SInuGQ9P088CsxHR1G9r/BCl8ABKZT9pXf7nux2+iFb42On8Gd9l8n8fkCifzuvgdiq8hDF9lp8JQ4GJF+z0mnRt8ZOtn4lnR1Kn1yRN5yLFl/CXvlOgJGTadxu8nd+X8Fd4TIAUf30BFL4ufi2duqLTuPuuhb/jOU2qSoCcdtwGeC5NcoWH8YaM4uvp1GtMkaTO6FT4WqJEPQQ577INgZDXfq82R+p0oajz/eOl6HAuXd0tZok0Nqqp29xX4cbOha+QLxx8tco2kLSqwmcbgpvOSeLjRvV8P/cq0VK+y9x3e7YJTnieR7e93c9d/bhfvffqHduEKPyMlwGbval7p1SWK5WteJlO/UDHI/ZjCE54Gd1ub/8RfN07adt2XTvnmyO5Ijjh4SlFegb8grGYipB3c6y3LfhU6bPRSE15mda8j5Wv7UBqmw5+17ocOzhe5blbAbmLahXSxV9iqm57WX206BFXZ6ORKjgu0/VeihQNAimZ8hhaiZJTUCo7Nqrm3ts83gVStWIqf1rVmWmye5XcLDPMzGMRapmTY+i18JhBYFUz9kaprLVudscGSsEN2GwIcnBnwYLnRZ9WKl+p3fvVr/HseTuVXgsv3fWYl7XxnNW921O98gtmUWV16vF90mvh4UVtvHp1rMr6T616Vbfyp8qUQxgQ9l74ij27Puf73i/Rra+5Uus3TXCVKU+l74O7F4gl3sqiyGSf36GWSYNS2c55vNblnVLZIybbptcDuV0MSvgKEeoHsaTrH2N6gmoBJVcqA+OgevGZUPavbYNBCr8LGel/2/GvOfIcVyr7eQjP72MYzDP+EDIK31Wm5WnwFovoEJHwQs7ukqP3RBb7F5XwWpfVpggfME6YNWYv17zv83JbonnG1xG3btT5e1FZfOKZJHykJOEjJQkfKUn4SEnCR0oSPlKS8JGShI8UG8/dtUX4bhPeDinQYRe1/ADvJIuPlCR8pCThIyUJHylJ+EhJwsfJ6pw4q07FzuJcQogfDr0zMRjutS4XVVefk8SPgXtMVU/juat2ipTyojnHVchwTQyhzSt2R/m2zZKtfP7/AXCjjVS70dydAAAAAElFTkSuQmCC" alt="Rescan" class="nav-icon-img">
+        <div class="nav-label">Rescan</div>
+      </button>
+    </div>
+
+  </nav>
+
+  <!-- JavaScript -->
+
+</body>
+</html>
