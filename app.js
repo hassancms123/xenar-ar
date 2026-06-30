@@ -1,9 +1,3 @@
-/* =========================================================
-   XENAR APP LOGIC
-   MindAR = image detection
-   Three.js = product model viewer in S4
-========================================================= */
-
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
