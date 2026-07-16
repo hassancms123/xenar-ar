@@ -257,6 +257,26 @@ function addClick(element, action) {
   }
 }
 
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function restartARScanner() {
+  console.log("Restarting AR scanner...");
+
+  stopARScanner();
+
+  targetAlreadyHandled = false;
+
+  if (scanInstruction) {
+    scanInstruction.textContent = "Restarting camera...";
+  }
+
+  await wait(700);
+
+  startARScanner();
+}
+
 
 /* =========================================================
    6. SCREEN MANAGEMENT
@@ -1717,7 +1737,7 @@ addClick(homeNavBtn, () => {
 });
 
 addClick(rescanNavBtn, () => {
-  startARScanner();
+  restartARScanner();
 });
 
 addClick(backNavBtn, () => {
